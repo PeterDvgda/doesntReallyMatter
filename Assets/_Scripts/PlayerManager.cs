@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour {
-    //Singleto instance of the player
+public class PlayerManager : MonoBehaviour
+{
+    //Singleton instance of the player
     public static PlayerManager instance;
-
+    public GameObject playerBody;
+    public float rotationSpeed;
+    public float movementSpeed;
     private void OnEnable()
     {
         //Set reference for the player singleton
@@ -26,12 +29,16 @@ public class PlayerManager : MonoBehaviour {
     //Handler for the Update event
     private void OnUpdateHandler()
     {
-        Debug.Log("PLAYER UPDATE");
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        playerBody.transform.eulerAngles = new Vector3(0, 0, playerBody.transform.eulerAngles.z - horizontalInput * rotationSpeed);
+        playerBody.transform.Translate(Vector2.right * verticalInput * movementSpeed);
     }
 
-    
+
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start()
+    {
+
+    }
 }
