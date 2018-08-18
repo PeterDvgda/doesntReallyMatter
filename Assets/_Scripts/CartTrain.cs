@@ -27,7 +27,7 @@ public class CartTrain : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         cartTrainBody.transform.eulerAngles = new Vector3(0, 0, cartTrainBody.transform.eulerAngles.z - horizontalInput * rotationSpeed);
-        cartTrainBody.transform.Translate(Vector2.right * verticalInput * movementSpeed);
+        cartTrainBody.transform.Translate(Vector2.left * verticalInput * movementSpeed);
         cartTrainBody.velocity = new Vector2(vertical, horizontal);
     }
 }
