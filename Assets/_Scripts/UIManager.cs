@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
     public static UIManager instance;
+    public Text timerText;
+
     private void OnEnable()
     {
         if (instance == null)
@@ -18,12 +20,16 @@ public class UIManager : MonoBehaviour {
     //On Update
     private void OnUpdateHandler()
     {
-        Debug.Log("TEST");
     }
 
     // Use this for initialization
-    void Start () {
-		
+    void Start ()
+    {
+
 	}
+    public void DisplayTime(string timeString)
+    {
+        timerText.text = timeString;
+    }
 	
 }
