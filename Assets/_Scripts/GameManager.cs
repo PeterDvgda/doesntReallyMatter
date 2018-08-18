@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour {
     //The timer
     private float timer;
 
+    private float damageScore;
+
     //Event syntax for undate
     public delegate void OnUpdateEvent();
     public static event OnUpdateEvent OnUpdate;
@@ -86,5 +88,11 @@ public class GameManager : MonoBehaviour {
             cartHingeJoint.connectedAnchor = new Vector2(-0.2684855f, 0);
         }
         cartHingeJoint.autoConfigureConnectedAnchor = false;
+    }
+
+    public void updateDamageScore()
+    {
+        damageScore++;
+        Debug.Log(damageScore);
     }
 }
