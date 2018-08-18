@@ -5,7 +5,6 @@ public class SnakeBodyPart : MonoBehaviour
     public GameObject parentBodyPart;
     public Vector3 lastPosition;
     public Vector3 nextPosition;
-
     private float _timer = 0;
 
 
