@@ -31,8 +31,8 @@ public class PlayerManager : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        playerBody.transform.eulerAngles = new Vector3(0, 0, playerBody.transform.eulerAngles.z - horizontalInput * rotationSpeed);
-        playerBody.transform.Translate(Vector2.right * verticalInput * movementSpeed);
+        transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
+        transform.Translate(Vector2.right * verticalInput * movementSpeed);
     }
 
 
@@ -40,5 +40,10 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
 
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Cart")
+            GameManager.instance.AddCart(collision.gameObject);
     }
 }

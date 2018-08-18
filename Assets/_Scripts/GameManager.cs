@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public GameState state;
     //Max time for a round of gameplay
     public float maxTime = 60;
+    public List<GameObject> carts;
     //The timer
     private float timer;
 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour {
     void Start ()
     {
         timer = maxTime;
+        carts = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -59,5 +61,30 @@ public class GameManager : MonoBehaviour {
                 OnEndGame();
             }
         }
+    }
+    public void AddCart(GameObject cart)
+    {
+        if (carts.Contains(cart))
+            return;
+
+        carts.Add(cart);
+        cart.transform.localEulerAngles = Vector3.zero;
+        HingeJoint2D cartHingeJoint = cart.GetComponent<HingeJoint2D>();
+        if(carts.Count == 1)
+        {
+            cart.transform.position = PlayerManager.instance.transform.position;
+            cartHingeJoint.connectedBody = PlayerManager.instance.GetComponent<Rigidbody2D>();
+            cartHingeJoint.anchor = new Vector2(1.23f, 0);
+            cartHingeJoint.connectedAnchor = new Vector2(-0.52f, 0);
+        }
+        else
+        {
+            Debug.Log(carts[carts.Count - 2].name);
+            cart.transform.position = carts[carts.Count - 2].transform.position;
+            cartHingeJoint.connectedBody = carts[carts.Count - 2].GetComponent<Rigidbody2D>();
+            cartHingeJoint.anchor = new Vector2(0.55f, 0);
+            cartHingeJoint.connectedAnchor = new Vector2(-0.2684855f, 0);
+        }
+        cartHingeJoint.autoConfigureConnectedAnchor = false;
     }
 }
