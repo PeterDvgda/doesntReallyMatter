@@ -132,5 +132,10 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.EndGameDelayed(0);
 
         }
+        if (tag == "Portal")
+        {
+
+
+        }
     }
 }
