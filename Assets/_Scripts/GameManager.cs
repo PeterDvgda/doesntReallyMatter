@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 
     private float damageScore;
 
-    private float totalScore;
+    public float totalScore;
 
     private float cartScore;
     //Event syntax for undate

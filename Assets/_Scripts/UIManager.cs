@@ -51,32 +51,36 @@ public class UIManager : MonoBehaviour
         GameManager.OnEndGame -= OnEndGameHandler;
     }
 
-    //Handler for when the End Game event is called
     private void OnEndGameHandler()
     {
         Debug.Log("GAME END");
         Time.timeScale = 0;
-        Debug.Log("GAME END");
-        yield return new WaitForSeconds(2);
-        if(GameManager.instance.isPortal == true)
+        StartCoroutine(EndGameCoroutine());
+        
+    }
+    IEnumerator EndGameCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        if (PlayerManager.instance.isPortal == true)
         {
             AlpacaImage.enabled = true;
         }
-        else if(GameManger.instance.isDead == true)
+        else if (PlayerManager.instance.isDead == true)
         {
             CarCrashImage.enabled = true;
         }
-        else if(GameManager.instance.totalScore > 12)
+        else if (GameManager.instance.totalScore > 12)
         {
             victoryImage.enabled = true;
         }
-        else if(GameManager.instance.totalScore < 12)
+        else if (GameManager.instance.totalScore < 12)
         {
             failureImage.enabled = true;
         }
         GameOverUI.SetActive(true);
-
     }
+    //Handler for when the End Game event is called
+
 
     //Handler for when the Update event is called
     private void OnUpdateHandler()
