@@ -627,7 +627,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Yuuchi Ng\r\nTara Nguyen\r"
+  m_Text: "Yuuchi Ng\r\nTara Nguyen\r\nPat Dimaandal"
 --- !u!222 &919570089
 CanvasRenderer:
   m_ObjectHideFlags: 0
