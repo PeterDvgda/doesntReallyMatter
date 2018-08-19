@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
             //Decrement timer
             timer -= Time.deltaTime;
             //Call the SINGLETON INSTANCE of the UI manager and call the DisplayTime function
-            UIManager.instance.DisplayTime("00:" + timer.ToString("F0"));
+            UIManager.instance.DisplayTime("00:" + timer.ToString("00"));
             //If the timer is less than 0
             if(timer <= 0)
             {
