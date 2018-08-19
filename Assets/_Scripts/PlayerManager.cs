@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
     public bool isDead;
     private float timer;
     private bool usedBoost;
+    public SpriteRenderer PortalSprite;
+
     private void OnEnable()
     {
         //Set reference for the player singleton
@@ -158,7 +160,12 @@ public class PlayerManager : MonoBehaviour
         }
         if (tag == "Portal")
         {
-            isPortal = true;
+            if(isBoosting)
+            {
+                isPortal = true;
+
+                GameManager.instance.state = GameState.End;
+            }
         }
     }
     public void PlayRandomFootStep()
