@@ -64,5 +64,14 @@ public class UIManager : MonoBehaviour {
 		Application.Quit();
 	}
 
+	public void ClickedBack()
+	{
+		SceneManager.LoadScene("MenuScene");
+	}
+
+	public void ClickedCredits()
+	{
+		SceneManager.LoadScene("CreditsScene");
+	}
 	
 }
