@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     public Image AlpacaImage;
 
     public Image CarCrashImage;
+    public Text rocketUsesText;
+    public Image rocketUsesCircleImage;
+    public Image rocketUsesRocketImage;
 
     bool paused = false;
     
@@ -61,6 +64,7 @@ public class UIManager : MonoBehaviour
     IEnumerator EndGameCoroutine()
     {
         yield return new WaitForSecondsRealtime(2);
+        rocketUsesCircleImage.gameObject.SetActive(false);
         if (PlayerManager.instance.isPortal == true)
         {
             AlpacaImage.enabled = true;
@@ -115,7 +119,7 @@ public class UIManager : MonoBehaviour
     public void ClickedPlay()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene("Level v4");
         if (paused == true)
             paused = false;
     }
@@ -173,5 +177,11 @@ public class UIManager : MonoBehaviour
     void RemoveImage(Image GameOverImage)
     {
         GameOverImage.enabled = false;
+    }
+    public void updateRocketUses()
+    {
+        rocketUsesText.text = 0.ToString();
+        rocketUsesCircleImage.color = new Color(1, 1, 1, 0.5f);
+        rocketUsesRocketImage.color = new Color(1, 1, 1, 0.5f);
     }
 }
