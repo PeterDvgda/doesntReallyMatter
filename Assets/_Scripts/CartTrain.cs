@@ -13,7 +13,7 @@ public class CartTrain : MonoBehaviour
     public Rigidbody2D cartTrainBody;
     float vertical;
     float horizontal;
-    float speed = 5f;
+
     public float rotationSpeed;
     public float movementSpeed;
 
