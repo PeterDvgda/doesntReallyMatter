@@ -12,6 +12,8 @@ public class CartSpawner : MonoBehaviour {
     public Transform borderLeft;
     public Transform borderRight;
 
+    private int collisions; 
+
     // Use this for initialization
     void Start()
     {
@@ -22,8 +24,6 @@ public class CartSpawner : MonoBehaviour {
     // Spawn one cart
     public void Spawn()
     {
-        Collider2D[] results;
-
         // x position between left & right border
         int x = (int)Random.Range(borderLeft.position.x + 2, borderRight.position.x - 2);
 
@@ -31,15 +31,18 @@ public class CartSpawner : MonoBehaviour {
         int y = (int)Random.Range(borderBottom.position.y + 2, borderTop.position.y - 2);
 
         Vector2 spawnPoint = new Vector2(x, y);
-        if ()
-        {
-            Spawn();
-            Debug.Log("at point " + spawnPoint +" respawning");
-        }
-        else
-            Instantiate(cart, new Vector2(x, y), Quaternion.identity); // default rotation
+        Collider2D[] results;
+        var resultscontent = Physics2D.OverlapCircle(spawnPoint, 2);
+        
+        //if ()
+        //{
+        //    Spawn();
+        //    Debug.Log("at point " + spawnPoint +" respawning");
+        //}
+        //else
+        //    Instantiate(cart, new Vector2(x, y), Quaternion.identity); // default rotation
 
-     
+
 
     }
 }
