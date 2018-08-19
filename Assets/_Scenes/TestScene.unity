@@ -511,6 +511,11 @@ Prefab:
       propertyPath: carAlarmLights.Array.data[3]
       value: 
       objectReference: {fileID: 1031081389}
+    - target: {fileID: 114979849603216642, guid: 40f536184a8e16544b115f3345728784,
+        type: 2}
+      propertyPath: carAlarmClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c9441a4206f2f02448dc65fd5e69461d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40f536184a8e16544b115f3345728784, type: 2}
   m_IsPrefabAsset: 0
@@ -1053,7 +1058,7 @@ SpriteRenderer:
   m_Size: {x: 1.33, y: 2.04}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &772654632

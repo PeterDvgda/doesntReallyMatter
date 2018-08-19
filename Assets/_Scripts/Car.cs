@@ -7,7 +7,7 @@ public class Car : MonoBehaviour {
     public AudioClip carAlarmClip;
     public GameObject[] carAlarmLights;
     private bool isCarAlarmActive;
-    private Coroutine carAlarmCoRoutine;
+    private Coroutine carAlarmCoroutine;
     private float timer;
     private void Start()
     {
@@ -19,7 +19,7 @@ public class Car : MonoBehaviour {
         if(isCarAlarmActive)
         {
             timer += Time.deltaTime;
-            if(timer >= 60)
+            if(timer >= 20)
             {
                 isCarAlarmActive = false;
                 timer = 0;
@@ -32,22 +32,24 @@ public class Car : MonoBehaviour {
         bool lightsOn = true;
         while(isCarAlarmActive)
         {
+            if (lightsOn == true)
+                audioSource.PlayOneShot(carAlarmClip);
             foreach (GameObject obj in carAlarmLights)
                 obj.SetActive(lightsOn);
-            //audioSource.PlayOneShot(carAlarmClip);
             lightsOn = !lightsOn;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             
+
         }
-        yield return null;
+        carAlarmCoroutine = null;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Cart")
         {
             GameManager.instance.updateDamageScore();
-            if (carAlarmCoRoutine == null)
-                carAlarmCoRoutine = StartCoroutine(PlayCarAlarm());
+            if (carAlarmCoroutine == null)
+                carAlarmCoroutine = StartCoroutine(PlayCarAlarm());
         }
     }
 }
