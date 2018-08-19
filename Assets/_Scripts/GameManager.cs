@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     //Max time for a round of gameplay
     public float maxTime = 60;
     public List<GameObject> carts;
+    public Sprite rocketCartSprite;
     //The timer
     private float timer;
 
@@ -107,6 +108,10 @@ public class GameManager : MonoBehaviour {
     {
         damageScore++;
         Debug.Log(damageScore);
+    }
+    public void ChangeBoostCartImage()
+    {
+        carts[0].GetComponentInChildren<SpriteRenderer>().sprite = rocketCartSprite;
     }
     public void EndGameDelayed(float timeDelay)
     {
