@@ -1646,7 +1646,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1650704759}
   - component: {fileID: 1650704758}
-  - component: {fileID: 1650704757}
   - component: {fileID: 1650704760}
   m_Layer: 0
   m_Name: Cart Turn In
@@ -1655,17 +1654,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1650704757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1650704756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ae0764aa7d40741851e6e03f8c89c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1650704758
 BoxCollider2D:
   m_ObjectHideFlags: 0
