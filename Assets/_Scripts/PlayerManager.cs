@@ -69,6 +69,7 @@ public class PlayerManager : MonoBehaviour
                     rocketSprite2.enabled = true;
                     rocketParticleSystem1.Play();
                     rocketParticleSystem2.Play();
+                    UIManager.instance.updateRocketUses();
                     AudioManager.instance.PlayStopRocketBoost(true);
                     playerAnimator.SetBool("isBoosting", true);
                 }
