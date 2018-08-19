@@ -32,6 +32,8 @@ public class PlayerManager : MonoBehaviour
     //Handler for the Update event
     private void OnUpdateHandler()
     {
+        if (GameManager.instance.state == GameState.End || GameManager.instance.state == GameState.Paused)
+            return;
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);

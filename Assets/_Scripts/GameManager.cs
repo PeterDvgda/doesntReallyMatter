@@ -6,6 +6,7 @@ using UnityEngine;
 public enum GameState
 {
     Gameplay,
+    Paused,
     End
 }
 
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour {
     //Event syntax for undate
     public delegate void OnUpdateEvent();
     public static event OnUpdateEvent OnUpdate;
+    public delegate void OnPauseEvent();
+    public static event OnPauseEvent OnPause;
     //Event syntax for the game ending
     public delegate void OnEndGameEvent();
     public static event OnEndGameEvent OnEndGame;
@@ -62,6 +65,16 @@ public class GameManager : MonoBehaviour {
                 //Call the end
                 OnEndGame();
             }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (state == GameState.Gameplay)
+                state = GameState.Paused;
+            else if (state == GameState.Paused)
+                state = GameState.Gameplay;
+            OnPause();
         }
     }
     public void AddCart(GameObject cart)
