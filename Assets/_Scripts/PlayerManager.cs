@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     //Singleton instance of the player
     public static PlayerManager instance;
     public GameObject playerBody;
+    public Animator playerAnimator;
     public float rotationSpeed;
     public float movementSpeed;
     private void OnEnable()
@@ -33,8 +34,8 @@ public class PlayerManager : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
         transform.Translate(Vector2.right * verticalInput * movementSpeed);
+        playerAnimator.SetInteger("isMoving", (verticalInput != 0) ? 1 : 0);
     }
-
 
     // Use this for initialization
     void Start()
@@ -44,6 +45,9 @@ public class PlayerManager : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Cart")
+        {
+            playerAnimator.SetBool("isGrabbing", true);
             GameManager.instance.AddCart(collision.gameObject);
+        }
     }
 }
