@@ -108,4 +108,14 @@ public class GameManager : MonoBehaviour {
         damageScore++;
         Debug.Log(damageScore);
     }
+    public void EndGameDelayed(float timeDelay)
+    {
+        state = GameState.End;
+        StartCoroutine(DelayedEndGame(timeDelay));
+    }
+    IEnumerator DelayedEndGame(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        OnEndGame();
+    }
 }

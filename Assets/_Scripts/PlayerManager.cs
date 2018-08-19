@@ -13,6 +13,12 @@ public class PlayerManager : MonoBehaviour
     public float movementSpeed;
     public float horizontalInput;
     public float verticalInput;
+    public bool isBoosting;
+    public float boostTime;
+    public float boostSpeed;
+    public ParticleSystem explosionParticleSystem;
+    private float timer;
+    private bool usedBoost;
     private void OnEnable()
     {
         //Set reference for the player singleton
@@ -32,28 +38,62 @@ public class PlayerManager : MonoBehaviour
     //Handler for the Update event
     private void OnUpdateHandler()
     {
-        if (GameManager.instance.state == GameState.End || GameManager.instance.state == GameState.Paused)
-            return;
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
-        transform.Translate(Vector2.right * verticalInput * movementSpeed);
-        playerAnimator.SetInteger("isMoving", (verticalInput != 0) ? 1 : 0);
-        if (GameManager.instance.carts.Count != 0)
-            playerAnimator.speed = Mathf.Clamp((1- (GameManager.instance.carts.Count * 0.05f)), 0.55f, 1);
+        if(GameManager.instance.state != GameState.End)
+        {
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
+            if (isBoosting == false)
+            {
+                transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
+                transform.Translate(Vector2.right * verticalInput * movementSpeed);
+                playerAnimator.SetInteger("isMoving", (verticalInput != 0) ? 1 : 0);
+                if (GameManager.instance.carts.Count != 0)
+                    playerAnimator.speed = Mathf.Clamp((1 - (GameManager.instance.carts.Count * 0.05f)), 0.55f, 1);
+
+                if (GameManager.instance.carts.Count != 0 && Input.GetKeyDown(KeyCode.Space) && usedBoost == false)
+                {
+                    timer = 0;
+                    usedBoost = true;
+                    isBoosting = true;
+                }
+            }
+            else if (isBoosting == true)
+            {
+                timer += Time.deltaTime;
+                Debug.Log(timer);
+                if (timer >= boostTime)
+                {
+                    isBoosting = false;
+                    return;
+                }
+                transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
+                transform.Translate(Vector2.right * 1 * movementSpeed * boostSpeed);
+            }
+        }    
     }
 
     // Use this for initialization
     void Start()
     {
-
+        isBoosting = false;
+        usedBoost = false;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Cart")
+        tag = collision.gameObject.tag;
+        if (tag == "Cart")
         {
             playerAnimator.SetBool("isGrabbing", true);
             GameManager.instance.AddCart(collision.gameObject);
+        }
+        if (tag == "Car")
+        {
+            if (isBoosting)
+            {
+                Destroy(playerBody);
+                explosionParticleSystem.Play();
+                GameManager.instance.EndGameDelayed(2);
+            }
         }
     }
 }
