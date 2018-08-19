@@ -12,13 +12,13 @@ public class CartSpawner : MonoBehaviour {
     public Transform borderLeft;
     public Transform borderRight;
 
-    private int collisions;
+    Collider2D[] colliders; 
 
     // Use this for initialization
     void Start()
     {
         // Spawn cart every 4 seconds, starting in 3
-        InvokeRepeating("Spawn", 3, 4);
+        InvokeRepeating("Spawn", 4, 3);
     }
 
     // Spawn one cart
@@ -28,23 +28,21 @@ public class CartSpawner : MonoBehaviour {
         int x = (int)Random.Range(borderLeft.position.x, borderRight.position.x);
 
         // y position between top & bottom border
-        int y = (int)Random.Range(borderBottom.position.y + 2, borderTop.position.y - 2);
+        int y = (int)Random.Range(borderBottom.position.y, borderTop.position.y);
 
         Vector2 spawnPoint = new Vector2(x, y);
-        Collider2D[] results;
-        var resultscontent = Physics2D.OverlapCircle(spawnPoint, 2);
 
-        //if ()
-        //{
-        //    Spawn();
-        //    Debug.Log("at point " + spawnPoint +" respawning");
-        //}
-        //else
-        //    Instantiate(cart, new Vector2(x, y), Quaternion.identity); // default rotation
+        colliders = Physics2D.OverlapCircleAll(spawnPoint, 3);
 
-
-
-        // Instantiate the cart at (x, y)
-        Instantiate(cart,new Vector2(x, y), Quaternion.identity); // default rotation
+        if (colliders.Length > 0)
+        {
+            Debug.Log("at point " + spawnPoint + " respawning");
+            Spawn();
+        }
+        else
+        {
+            cart.GetComponent<HingeJoint2D>().connectedAnchor = spawnPoint;
+            Instantiate(cart, spawnPoint, Quaternion.identity); // default rotation
+        }
     }
 }
