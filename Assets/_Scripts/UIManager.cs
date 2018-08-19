@@ -110,6 +110,13 @@ public class UIManager : MonoBehaviour
             paused = false;
     }
 
+    public void ClickedControls()
+    {
+        SceneManager.LoadScene("ControlsScene");
+        if (paused == true)
+            paused = false;
+    }
+
     public void PauseHandler()
     {
         Debug.Log("You pressed escape");
