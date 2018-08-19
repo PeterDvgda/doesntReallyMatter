@@ -74,7 +74,6 @@ public class PlayerManager : MonoBehaviour
             else if (isBoosting == true)
             {
                 timer += Time.deltaTime;
-                Debug.Log(timer);
                 if (timer >= boostTime)
                 {
                     isBoosting = false;
@@ -136,13 +135,16 @@ public class PlayerManager : MonoBehaviour
                 foreach(Collider2D obj in ObjectsAround)
                 {
                     Rigidbody2D rb2d = obj.gameObject.GetComponent<Rigidbody2D>();
-                    rb2d.constraints = RigidbodyConstraints2D.None;
-                    Vector2 forceVector = rb2d.transform.position - transform.position;
-                    Debug.Log(forceVector);
-                    if(rb2d.name != "Player")
+                    if(rb2d != null)
                     {
-                        rb2d.velocity = forceVector * explosionStrength;
+                        if (obj.name != "Player" || obj.gameObject.tag != "Bounds")
+                        {
+                            Vector2 forceVector = rb2d.transform.position - transform.position;
+                            rb2d.constraints = RigidbodyConstraints2D.None;
+                            rb2d.velocity = forceVector * explosionStrength;
+                        }
                     }
+                    
                 }
                 GameManager.instance.EndGameDelayed(3);
             }

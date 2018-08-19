@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour {
     public AudioSource cartCollectAudioSource;
     public AudioSource explosionAudioSource;
     public AudioClip[] playerSteps;
+    public AudioClip[] cartLinkClips;
 	// Use this for initialization
 	void Start () {
         if (instance == null)
@@ -42,7 +43,8 @@ public class AudioManager : MonoBehaviour {
     }
     public void PlayOneShotCartCollect()
     {
-        cartCollectAudioSource.Play();
+        int index = Random.Range(0, cartLinkClips.Length);
+        cartCollectAudioSource.PlayOneShot(cartLinkClips[index]);
     }
     public void PlayOneShotExplosion()
     {

@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Submission
   - Portal
+  - Bounds
   layers:
   - Default
   - TransparentFX
