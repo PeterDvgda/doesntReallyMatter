@@ -22,8 +22,9 @@ public class PlayerManager : MonoBehaviour
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem rocketParticleSystem1;
     public ParticleSystem rocketParticleSystem2;
+    public bool isPortal;
+    public bool isDead;
     private float timer;
-    private bool isDead;
     private bool usedBoost;
     private void OnEnable()
     {
@@ -44,7 +45,7 @@ public class PlayerManager : MonoBehaviour
     //Handler for the Update event
     private void OnUpdateHandler()
     {
-        if(isDead == false)
+        if(isDead == false && isPortal == false && GameManager.instance.state != GameState.End)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
@@ -148,12 +149,10 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.updateTotalScore();
             UIManager.instance.UpdateScoreText();
             GameManager.instance.EndGameDelayed(0);
-
         }
         if (tag == "Portal")
         {
-
-
+            isPortal = true;
         }
     }
     public void PlayRandomFootStep()

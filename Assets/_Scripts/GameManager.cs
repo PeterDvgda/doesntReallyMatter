@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviour {
             cartHingeJoint.connectedAnchor = new Vector2(-0.2684855f, 0);
         }
         cartHingeJoint.autoConfigureConnectedAnchor = false;
+        if(carts.Count > 1)
+            AudioManager.instance.PlayOneShotCartCollect();
     }
 
     public void updateDamageScore()

@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour {
     public AudioSource rocketAudioSource;
     public AudioSource footStepAudioSource;
     public AudioSource cartCarImpactAudioSource;
+    public AudioSource cartCollectAudioSource;
     public AudioClip[] playerSteps;
 	// Use this for initialization
 	void Start () {
@@ -37,5 +38,9 @@ public class AudioManager : MonoBehaviour {
     public void PlayOneShotCarImpact()
     {
         cartCarImpactAudioSource.Play();
+    }
+    public void PlayOneShotCartCollect()
+    {
+        cartCollectAudioSource.Play();
     }
 }
