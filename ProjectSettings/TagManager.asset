@@ -44,9 +44,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: RoofSign
-    uniqueID: 1052611131
+  - name: Ground
+    uniqueID: 2719901543
+    locked: 0
+  - name: GroundCracks
+    uniqueID: 2514449849
+    locked: 0
+  - name: Player
+    uniqueID: 2032021149
     locked: 0
   - name: Roof_Bottom
     uniqueID: 3675139929
+    locked: 0
+  - name: RoofSign
+    uniqueID: 1052611131
     locked: 0
