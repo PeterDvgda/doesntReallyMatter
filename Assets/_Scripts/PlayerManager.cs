@@ -120,8 +120,8 @@ public class PlayerManager : MonoBehaviour
             if (isBoosting)
             {
                 isDead = true;
+                playerAnimator.SetBool("isDead", true);
                 AudioManager.instance.PlayStopRocketBoost(false);
-                Destroy(playerBody);
                 Destroy(playerBody.transform.parent.GetComponent<CircleCollider2D>());
                 Destroy(playerBody.transform.parent.GetComponent<Rigidbody2D>());
                 Destroy(rocketSprite1.gameObject);
@@ -139,7 +139,7 @@ public class PlayerManager : MonoBehaviour
                         rb2d.velocity = forceVector * explosionStrength;
                     }
                 }
-                GameManager.instance.EndGameDelayed(2);
+                GameManager.instance.EndGameDelayed(3);
             }
         }
         if (tag == "Submission")

@@ -3515,6 +3515,23 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114550962610487810, guid: 33ac3ac25338cfe428ddde77809306d9,
+        type: 2}
+      propertyPath: explosionStrength
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114550962610487810, guid: 33ac3ac25338cfe428ddde77809306d9,
+        type: 2}
+      propertyPath: yamchaDeathSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 25a8fc3e548fd384f96caa43b022f645,
+        type: 3}
+    - target: {fileID: 212380477241790506, guid: 33ac3ac25338cfe428ddde77809306d9,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300004, guid: 8f9e6fc65413878418d6d92dcba05cad,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33ac3ac25338cfe428ddde77809306d9, type: 2}
   m_IsPrefabAsset: 0
