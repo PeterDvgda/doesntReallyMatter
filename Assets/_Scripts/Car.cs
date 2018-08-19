@@ -9,9 +9,11 @@ public class Car : MonoBehaviour {
     private bool isCarAlarmActive;
     private Coroutine carAlarmCoroutine;
     private float timer;
+    private bool isHit;
     private void Start()
     {
         isCarAlarmActive = false;
+        isHit = false;
     }
     
     private void Update()
@@ -47,7 +49,9 @@ public class Car : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Cart")
         {
-            GameManager.instance.updateDamageScore();
+            if(isHit == true)
+                GameManager.instance.updateDamageScore();
+            AudioManager.instance.PlayOneShotCarImpact();
             if (carAlarmCoroutine == null)
                 carAlarmCoroutine = StartCoroutine(PlayCarAlarm());
         }

@@ -16,6 +16,14 @@ public class UIManager : MonoBehaviour
 
     public GameObject PauseUI;
 
+    public Image victoryImage;
+
+    public Image failureImage;
+
+    public Image AlpacaImage;
+
+    public Image CarCrashImage;
+
     bool paused = false;
     
     public Text ScoreText;
@@ -49,6 +57,23 @@ public class UIManager : MonoBehaviour
         Debug.Log("GAME END");
         Time.timeScale = 0;
         Debug.Log("GAME END");
+        yield return new WaitForSeconds(2);
+        if(GameManager.instance.isPortal == true)
+        {
+            AlpacaImage.enabled = true;
+        }
+        else if(GameManger.instance.isDead == true)
+        {
+            CarCrashImage.enabled = true;
+        }
+        else if(GameManager.instance.totalScore > 12)
+        {
+            victoryImage.enabled = true;
+        }
+        else if(GameManager.instance.totalScore < 12)
+        {
+            failureImage.enabled = true;
+        }
         GameOverUI.SetActive(true);
 
     }
@@ -56,6 +81,7 @@ public class UIManager : MonoBehaviour
     //Handler for when the Update event is called
     private void OnUpdateHandler()
     {
+
     }
 
     // Use this for initialization
@@ -110,6 +136,13 @@ public class UIManager : MonoBehaviour
             paused = false;
     }
 
+    public void ClickedControls()
+    {
+        SceneManager.LoadScene("ControlsScene");
+        if (paused == true)
+            paused = false;
+    }
+
     public void PauseHandler()
     {
         Debug.Log("You pressed escape");
@@ -131,5 +164,10 @@ public class UIManager : MonoBehaviour
     public void UpdateScoreText()
     {
         ScoreText.text = GameManager.instance.GetTotalScore();
+    }
+
+    void RemoveImage(Image GameOverImage)
+    {
+        GameOverImage.enabled = false;
     }
 }

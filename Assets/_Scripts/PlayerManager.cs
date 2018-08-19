@@ -22,6 +22,8 @@ public class PlayerManager : MonoBehaviour
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem rocketParticleSystem1;
     public ParticleSystem rocketParticleSystem2;
+    public bool isPortal;
+    public bool isDead;
     private float timer;
     private bool usedBoost;
     private void OnEnable()
@@ -43,7 +45,7 @@ public class PlayerManager : MonoBehaviour
     //Handler for the Update event
     private void OnUpdateHandler()
     {
-        if(GameManager.instance.state != GameState.End)
+        if(isDead == false && isPortal == false && GameManager.instance.state != GameState.End)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
@@ -64,6 +66,7 @@ public class PlayerManager : MonoBehaviour
                     rocketSprite2.enabled = true;
                     rocketParticleSystem1.Play();
                     rocketParticleSystem2.Play();
+                    AudioManager.instance.PlayStopRocketBoost(true);
                     playerAnimator.SetBool("isBoosting", true);
                 }
             }
@@ -75,6 +78,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     isBoosting = false;
                     playerAnimator.SetBool("isBoosting", false);
+                    AudioManager.instance.PlayStopRocketBoost(false);
                     rocketSprite1.enabled = false;
                     rocketSprite2.enabled = false;
                     return;
@@ -83,6 +87,16 @@ public class PlayerManager : MonoBehaviour
                 transform.Translate(Vector2.right * 1 * movementSpeed * boostSpeed);
             }
         }    
+        if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        {
+            if(GameManager.instance.carts.Count != 0)
+                AudioManager.instance.PlayStopCartPull(true);
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+        {
+            if(GameManager.instance.carts.Count != 0)
+                AudioManager.instance.PlayStopCartPull(false);
+        }
     }
 
     // Use this for initialization
@@ -97,13 +111,18 @@ public class PlayerManager : MonoBehaviour
         if (tag == "Cart")
         {
             playerAnimator.SetBool("isGrabbing", true);
+            if (GameManager.instance.carts.Count == 0)
+                AudioManager.instance.PlayStopCartPull(true);
             GameManager.instance.AddCart(collision.gameObject);
+            
         }
         if (tag == "Car")
         {
             if (isBoosting)
             {
-                Destroy(playerBody);
+                isDead = true;
+                playerAnimator.SetBool("isDead", true);
+                AudioManager.instance.PlayStopRocketBoost(false);
                 Destroy(playerBody.transform.parent.GetComponent<CircleCollider2D>());
                 Destroy(playerBody.transform.parent.GetComponent<Rigidbody2D>());
                 Destroy(rocketSprite1.gameObject);
@@ -121,7 +140,7 @@ public class PlayerManager : MonoBehaviour
                         rb2d.velocity = forceVector * explosionStrength;
                     }
                 }
-                GameManager.instance.EndGameDelayed(2);
+                GameManager.instance.EndGameDelayed(3);
             }
         }
         if (tag == "Submission")
@@ -130,7 +149,14 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.updateTotalScore();
             UIManager.instance.UpdateScoreText();
             GameManager.instance.EndGameDelayed(0);
-
         }
+        if (tag == "Portal")
+        {
+            isPortal = true;
+        }
+    }
+    public void PlayRandomFootStep()
+    {
+        AudioManager.instance.PlayRandomFootStep();
     }
 }
