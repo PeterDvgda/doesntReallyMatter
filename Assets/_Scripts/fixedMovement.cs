@@ -24,11 +24,11 @@ public class fixedMovement : MonoBehaviour {
 			transform.Translate (-Vector2.right * speed * Time.deltaTime);
 		}
 		
-		if(startingX - transform.position.x < -3) { 
+		if(startingX - transform.position.x < -2) { 
 			dirRight = false;
 		}
 		
-		if(startingX - transform.position.x > 3) {
+		if(startingX - transform.position.x > 2) {
 			dirRight = true;
 		}
 
