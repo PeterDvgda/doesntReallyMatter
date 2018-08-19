@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour {
 
     private float damageScore;
 
+    private float totalScore;
+
+    private float cartScore;
     //Event syntax for undate
     public delegate void OnUpdateEvent();
     public static event OnUpdateEvent OnUpdate;
@@ -106,12 +109,8 @@ public class GameManager : MonoBehaviour {
 
     public void updateDamageScore()
     {
-        damageScore++;
+        damageScore = damageScore + 2;
         Debug.Log(damageScore);
-    }
-    public void ChangeBoostCartImage()
-    {
-        carts[0].GetComponentInChildren<SpriteRenderer>().sprite = rocketCartSprite;
     }
     public void EndGameDelayed(float timeDelay)
     {
@@ -123,4 +122,27 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         OnEndGame();
     }
+
+
+    public void updateTotalScore()
+    {
+        totalScore = cartScore - damageScore;
+        if (totalScore < 0)
+            totalScore = 0;
+        Debug.Log(totalScore);
+    }
+
+    public string GetTotalScore()
+    {
+        Debug.Log("total score is " + totalScore.ToString());
+        return totalScore.ToString();
+    }
+
+    public void updateScore()
+    {
+        Debug.Log("carts Count is " + carts.Count);
+        cartScore = carts.Count;
+        Debug.Log(cartScore);
+    }
+
 }

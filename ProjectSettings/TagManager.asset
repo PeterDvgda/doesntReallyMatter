@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cart
   - Car
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: RoofSign
+    uniqueID: 1052611131
+    locked: 0
+  - name: Roof_Bottom
+    uniqueID: 3675139929
     locked: 0

@@ -17,7 +17,8 @@ public class UIManager : MonoBehaviour
     public GameObject PauseUI;
 
     bool paused = false;
-
+    
+    public Text ScoreText;
     private void OnEnable()
     {
         //Set the singleton instance
@@ -126,5 +127,9 @@ public class UIManager : MonoBehaviour
             paused = false;
         }
 
+    }
+    public void UpdateScoreText()
+    {
+        ScoreText.text = GameManager.instance.GetTotalScore();
     }
 }

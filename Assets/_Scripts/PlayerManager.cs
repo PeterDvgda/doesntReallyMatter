@@ -17,7 +17,11 @@ public class PlayerManager : MonoBehaviour
     public float boostTime;
     public float boostSpeed;
     public float explosionStrength;
+    public SpriteRenderer rocketSprite1;
+    public SpriteRenderer rocketSprite2;
     public ParticleSystem explosionParticleSystem;
+    public ParticleSystem rocketParticleSystem1;
+    public ParticleSystem rocketParticleSystem2;
     private float timer;
     private bool usedBoost;
     private void OnEnable()
@@ -56,8 +60,11 @@ public class PlayerManager : MonoBehaviour
                     timer = 0;
                     usedBoost = true;
                     isBoosting = true;
+                    rocketSprite1.enabled = true;
+                    rocketSprite2.enabled = true;
+                    rocketParticleSystem1.Play();
+                    rocketParticleSystem2.Play();
                     playerAnimator.SetBool("isBoosting", true);
-                    GameManager.instance.ChangeBoostCartImage();
                 }
             }
             else if (isBoosting == true)
@@ -68,6 +75,8 @@ public class PlayerManager : MonoBehaviour
                 {
                     isBoosting = false;
                     playerAnimator.SetBool("isBoosting", false);
+                    rocketSprite1.enabled = false;
+                    rocketSprite2.enabled = false;
                     return;
                 }
                 transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
@@ -97,6 +106,8 @@ public class PlayerManager : MonoBehaviour
                 Destroy(playerBody);
                 Destroy(playerBody.transform.parent.GetComponent<CircleCollider2D>());
                 Destroy(playerBody.transform.parent.GetComponent<Rigidbody2D>());
+                Destroy(rocketSprite1.gameObject);
+                Destroy(rocketSprite2.gameObject);
                 explosionParticleSystem.Play();
                 Collider2D[] ObjectsAround = Physics2D.OverlapCircleAll(transform.position, 10);
                 foreach(Collider2D obj in ObjectsAround)
@@ -112,6 +123,14 @@ public class PlayerManager : MonoBehaviour
                 }
                 GameManager.instance.EndGameDelayed(2);
             }
+        }
+        if (tag == "Submission")
+        {
+            GameManager.instance.updateScore();
+            GameManager.instance.updateTotalScore();
+            UIManager.instance.UpdateScoreText();
+            GameManager.instance.EndGameDelayed(0);
+
         }
     }
 }
