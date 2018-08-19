@@ -13,10 +13,6 @@ public class PlayerManager : MonoBehaviour
     public float movementSpeed;
     public float horizontalInput;
     public float verticalInput;
-    public bool isBoosting;
-    public float boostTime;
-    public float boostSpeed;
-    private float timer;
     private void OnEnable()
     {
         //Set reference for the player singleton
@@ -36,41 +32,21 @@ public class PlayerManager : MonoBehaviour
     //Handler for the Update event
     private void OnUpdateHandler()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-        if (isBoosting == false)
-        {            
-            transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
-            transform.Translate(Vector2.right * verticalInput * movementSpeed);
-            playerAnimator.SetInteger("isMoving", (verticalInput != 0) ? 1 : 0);
-            if (GameManager.instance.carts.Count != 0)
-                playerAnimator.speed = Mathf.Clamp((1 - (GameManager.instance.carts.Count * 0.05f)), 0.55f, 1);
-
-            if (GameManager.instance.carts.Count != 0 && Input.GetKeyDown(KeyCode.E))
-            {
-                timer = 0;
-                isBoosting = true;
-            }
-        }
-        else if(isBoosting == true)
-        {
-            timer += Time.deltaTime;
-            Debug.Log(timer);
-            if(timer >= boostTime)
-            {
-                isBoosting = false;
-                return;
-            }
-            transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
-            transform.Translate(Vector2.right * 1*movementSpeed*boostSpeed);
-        }
-        
+        if (GameManager.instance.state == GameState.End || GameManager.instance.state == GameState.Paused)
+            return;
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
+        transform.Translate(Vector2.right * verticalInput * movementSpeed);
+        playerAnimator.SetInteger("isMoving", (verticalInput != 0) ? 1 : 0);
+        if (GameManager.instance.carts.Count != 0)
+            playerAnimator.speed = Mathf.Clamp((1- (GameManager.instance.carts.Count * 0.05f)), 0.55f, 1);
     }
 
     // Use this for initialization
     void Start()
     {
-        isBoosting = false;
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
