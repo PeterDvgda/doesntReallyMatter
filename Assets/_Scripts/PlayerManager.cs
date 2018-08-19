@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     public ParticleSystem rocketParticleSystem1;
     public ParticleSystem rocketParticleSystem2;
     private float timer;
+    private bool isDead;
     private bool usedBoost;
     private void OnEnable()
     {
@@ -43,7 +44,7 @@ public class PlayerManager : MonoBehaviour
     //Handler for the Update event
     private void OnUpdateHandler()
     {
-        if(GameManager.instance.state != GameState.End)
+        if(isDead == false)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
@@ -64,6 +65,7 @@ public class PlayerManager : MonoBehaviour
                     rocketSprite2.enabled = true;
                     rocketParticleSystem1.Play();
                     rocketParticleSystem2.Play();
+                    AudioManager.instance.PlayStopRocketBoost(true);
                     playerAnimator.SetBool("isBoosting", true);
                 }
             }
@@ -75,6 +77,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     isBoosting = false;
                     playerAnimator.SetBool("isBoosting", false);
+                    AudioManager.instance.PlayStopRocketBoost(false);
                     rocketSprite1.enabled = false;
                     rocketSprite2.enabled = false;
                     return;
@@ -83,6 +86,16 @@ public class PlayerManager : MonoBehaviour
                 transform.Translate(Vector2.right * 1 * movementSpeed * boostSpeed);
             }
         }    
+        if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        {
+            if(GameManager.instance.carts.Count != 0)
+                AudioManager.instance.PlayStopCartPull(true);
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+        {
+            if(GameManager.instance.carts.Count != 0)
+                AudioManager.instance.PlayStopCartPull(false);
+        }
     }
 
     // Use this for initialization
@@ -97,12 +110,16 @@ public class PlayerManager : MonoBehaviour
         if (tag == "Cart")
         {
             playerAnimator.SetBool("isGrabbing", true);
+            if (GameManager.instance.carts.Count == 0)
+                AudioManager.instance.PlayStopCartPull(true);
             GameManager.instance.AddCart(collision.gameObject);
+            
         }
         if (tag == "Car")
         {
             if (isBoosting)
             {
+                isDead = true;
                 Destroy(playerBody);
                 Destroy(playerBody.transform.parent.GetComponent<CircleCollider2D>());
                 Destroy(playerBody.transform.parent.GetComponent<Rigidbody2D>());
@@ -132,5 +149,9 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.EndGameDelayed(0);
 
         }
+    }
+    public void PlayRandomFootStep()
+    {
+        AudioManager.instance.PlayRandomFootStep();
     }
 }

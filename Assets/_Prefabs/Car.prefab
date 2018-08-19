@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 82292222272803854}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 82292222272803854}
-  carAlarmClip: {fileID: 8300000, guid: c9441a4206f2f02448dc65fd5e69461d, type: 3}
+  carAlarmClip: {fileID: 8300000, guid: f708f98504b41a34095184e436bcb6e7, type: 3}
   carAlarmLights:
   - {fileID: 1787247315154282}
   - {fileID: 1230866335835174}
