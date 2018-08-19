@@ -120,6 +120,7 @@ public class PlayerManager : MonoBehaviour
             if (isBoosting)
             {
                 isDead = true;
+                AudioManager.instance.PlayStopRocketBoost(false);
                 Destroy(playerBody);
                 Destroy(playerBody.transform.parent.GetComponent<CircleCollider2D>());
                 Destroy(playerBody.transform.parent.GetComponent<Rigidbody2D>());
