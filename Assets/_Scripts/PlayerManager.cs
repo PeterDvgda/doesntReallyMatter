@@ -19,6 +19,7 @@ public class PlayerManager : MonoBehaviour
     public float explosionStrength;
     public SpriteRenderer rocketSprite1;
     public SpriteRenderer rocketSprite2;
+    public GameObject deathCrater;
     public ParticleSystem explosionParticleSystem;
     public ParticleSystem rocketParticleSystem1;
     public ParticleSystem rocketParticleSystem2;
@@ -123,11 +124,14 @@ public class PlayerManager : MonoBehaviour
                 isDead = true;
                 playerAnimator.SetBool("isDead", true);
                 AudioManager.instance.PlayStopRocketBoost(false);
+                AudioManager.instance.PlayOneShotExplosion();
                 Destroy(playerBody.transform.parent.GetComponent<CircleCollider2D>());
                 Destroy(playerBody.transform.parent.GetComponent<Rigidbody2D>());
                 Destroy(rocketSprite1.gameObject);
                 Destroy(rocketSprite2.gameObject);
                 explosionParticleSystem.Play();
+                deathCrater.SetActive(true);
+                transform.eulerAngles = Vector3.zero;
                 Collider2D[] ObjectsAround = Physics2D.OverlapCircleAll(transform.position, 10);
                 foreach(Collider2D obj in ObjectsAround)
                 {
