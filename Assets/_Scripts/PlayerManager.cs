@@ -54,13 +54,15 @@ public class PlayerManager : MonoBehaviour
             verticalInput = Input.GetAxisRaw("Vertical");
             if (isBoosting == false)
             {
+                Rigidbody2D rb2d = gameObject.GetComponent<Rigidbody2D>();
+                rb2d.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
                 transform.eulerAngles = new Vector3(0, 0, transform.transform.eulerAngles.z - horizontalInput * rotationSpeed);
                 transform.Translate(Vector2.right * verticalInput * movementSpeed);
                 playerAnimator.SetInteger("isMoving", (verticalInput != 0) ? 1 : 0);
                 if (GameManager.instance.carts.Count != 0)
                     playerAnimator.speed = Mathf.Clamp((1 - (GameManager.instance.carts.Count * 0.05f)), 0.55f, 1);
 
-                if (GameManager.instance.carts.Count != 0 && Input.GetKeyDown(KeyCode.Space) && usedBoost == false)
+                if (GameManager.instance.carts.Count != 0 && Input.GetButtonDown("Jump") && usedBoost == false)
                 {
                     timer = 0;
                     usedBoost = true;
@@ -77,8 +79,13 @@ public class PlayerManager : MonoBehaviour
             else if (isBoosting == true)
             {
                 timer += Time.deltaTime;
-                if (timer >= boostTime)
+                Rigidbody2D rb2d = gameObject.GetComponent<Rigidbody2D>();
+                rb2d.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+                if (timer >= boostTime || Input.GetButtonDown("Jump"))
                 {
+                    rocketParticleSystem1.Stop();
+                    rocketParticleSystem2.Stop();
                     isBoosting = false;
                     playerAnimator.SetBool("isBoosting", false);
                     AudioManager.instance.PlayStopRocketBoost(false);
@@ -117,7 +124,9 @@ public class PlayerManager : MonoBehaviour
             if (GameManager.instance.carts.Count == 0)
                 AudioManager.instance.PlayStopCartPull(true);
             GameManager.instance.AddCart(collision.gameObject);
-            
+            GameManager.instance.updateScore();
+            GameManager.instance.updateTotalScore();
+            UIManager.instance.UpdateScoreText();
         }
         if (tag == "Car")
         {
@@ -173,6 +182,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
     public void PlayRandomFootStep()
     {
         AudioManager.instance.PlayRandomFootStep();

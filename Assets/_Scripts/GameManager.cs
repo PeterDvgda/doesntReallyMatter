@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour {
         if(carts.Count > 1)
             AudioManager.instance.PlayOneShotCartCollect();
     }
-
+    
     public void updateDamageScore()
     {
         damageScore = damageScore + 2;

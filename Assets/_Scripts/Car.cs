@@ -50,8 +50,10 @@ public class Car : MonoBehaviour {
         if (collision.gameObject.tag == "Cart")
         {
             if(isHit == true)
-                GameManager.instance.updateDamageScore();
-            AudioManager.instance.PlayOneShotCarImpact();
+                GameManager.instance.updateScore();
+                GameManager.instance.updateTotalScore();
+                UIManager.instance.UpdateScoreText();
+                AudioManager.instance.PlayOneShotCarImpact();
             if (carAlarmCoroutine == null)
                 carAlarmCoroutine = StartCoroutine(PlayCarAlarm());
         }
