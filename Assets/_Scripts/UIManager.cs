@@ -101,7 +101,8 @@ public class UIManager : MonoBehaviour
     //Display the current time
     public void DisplayTime(string timeString)
     {
-        timerText.text = timeString;
+        if(timerText!= null)
+            timerText.text = timeString;
     }
 
 
