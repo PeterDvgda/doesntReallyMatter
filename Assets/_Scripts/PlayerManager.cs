@@ -163,9 +163,13 @@ public class PlayerManager : MonoBehaviour
         {
             if(isBoosting)
             {
-                isPortal = true;
+                if (isBoosting)
+                {
+                    isPortal = true;
+                    PortalSprite.enabled = true;
+                    GameManager.instance.EndGameDelayed(0);
 
-                GameManager.instance.state = GameState.End;
+                }
             }
         }
     }
